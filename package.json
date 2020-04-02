@@ -1,0 +1,29 @@
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "description": "\"MyApp\"",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cesarlop/MyApp.git"
+  },
+  "keywords": [
+    "\"back-end\""
+  ],
+  "author": "Julio Salas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cesarlop/MyApp/issues"
+  },
+  "homepage": "https://github.com/cesarlop/MyApp#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "graphql-yoga": "^1.18.3"
+  }
+}
