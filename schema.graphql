@@ -1,0 +1,47 @@
+# Define all objects to use on the app
+
+type Query {
+    getUsers:[User]!
+}
+
+type Mutations {
+    createUser(data:createUserInput!): User!
+}
+
+enum GENDERS {
+    M
+    F
+    O
+}
+
+type User {
+    _id: ID!
+    first_name: String!
+    last_name: String!
+    email: String!
+    birth_date: String!
+    ride: [Ride]!
+    gender: GENDERS
+    profile_pic: String!
+    is_active: Boolean!
+}
+
+input createUserInput {
+    first_name: String!
+    last_name: String!
+    email: String!
+    profile_pic: String
+    birth_date: String  
+}
+
+
+type Ride{
+    _id: ID
+    where_start:String!
+    where_end:String!
+    when_start:String!
+    when_end:String!
+    rate:String!
+    liked:Boolean!
+    comment:String!
+}

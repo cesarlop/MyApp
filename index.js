@@ -1,71 +1,22 @@
-/* FALATA LEVANTAR EL SERVER */
-
+require('dotenv').config();
 const { GraphQLServer } = require('graphql-yoga');
+const { importSchema } = require('graphql-import'); /* importa de forma recursiva los datos de graphql */
+const resolvers = require('./src/resolvers');
+const mongoose = require('mongoose');
 
+mongoose.connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+});
 
-const typeDefs = `
-    type Query {
-        hello(name: String!):String!
-        getUsers:[User]!
-        getUser(id: Int!):User!
-    }
+const mongo = mongoose.connection;
 
-    type Mutation{
-        createUser(name:String!,age:Int!): User!
-        deleteUser(id: Int):String!
-        updateUser(id: Int, name:String!,age:Int!):User!
-    }
-    
-    type User{
-        id:Int!
-        name:String!
-        age:Int!
-    }
-`;
+mongo.on('error', error => console.log(error))
+    .once('open', () => console.log('Conected to DataBase 😆'));
 
-const users = [];
+const typeDefs = importSchema(__dirname + '/schema.graphql');
 
-const resolvers = {
-    Query:{
-        hello:(root, params, context, info) => `Hola ${params.name}`,
-        getUsers:(root,params,context,info) => users,
-        getUser:(root,{id},context,info)    => users.find(u => u.id == id),
-        
-    },
-    Mutation:{
-        createUser:(root, {name, age}, context, info) => {
-            const user = {
-                id: users.length + 7522946,
-                name,
-                age,
-            }
-            users.push(user);
-            return user;
-        },
-        deleteUser:(root,{id},context,info) => {
-            users.pop(u => u.id == id);
-            return "BORRADO";
-        },
-        updateUser:(root, {id,name,age},context,info) => {
-            let user = users.find(u => u.id == id);
-            user = {
-                id,
-                name,
-                age,
-            }
-            users.push(user);
-            return user;
-        }    
-    },
-
-};
-
-/**
- * root
- * params
- * context
- * info
- */
 
 const server = new GraphQLServer({
     typeDefs,
