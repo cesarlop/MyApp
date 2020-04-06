@@ -30,7 +30,7 @@ const UserSchema = new Schema({
         type:Boolean,
         default:true,
     }
-});
+}, { timestamps: true });
 
 /**
  * On mongo we should use plural nouns

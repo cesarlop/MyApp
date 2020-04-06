@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { GraphQLServer } = require('graphql-yoga');
 const { importSchema } = require('graphql-import'); /* importa de forma recursiva los datos de graphql */
+
 const resolvers = require('./src/resolvers');
 const mongoose = require('mongoose');
 
@@ -16,7 +17,6 @@ mongo.on('error', error => console.log(error))
     .once('open', () => console.log('Conected to DataBase 😆'));
 
 const typeDefs = importSchema(__dirname + '/schema.graphql');
-
 
 const server = new GraphQLServer({
     typeDefs,
