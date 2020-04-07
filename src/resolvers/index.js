@@ -1,4 +1,6 @@
 const UserResolver = require('./UserResolvers');
+const RiderResolver = require('./RiderResolvers');
+
 const { GraphQLScalarType  } = require('graphql');
 
 const DateTime = new GraphQLScalarType({
@@ -10,13 +12,15 @@ const DateTime = new GraphQLScalarType({
 });
 
 module.exports = {
-    DateTime,
+    
     Query:{
-        time: () => new Date(),
         ...UserResolver.Query,
+        ...RiderResolver.Query,
     },
 
     Mutation:{
         ...UserResolver.Mutation,    
     },
+
+    DateTime,
 };

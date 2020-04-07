@@ -2,7 +2,11 @@
 scalar DateTime
 type Query {
     getUsers:[User]!
-    time: DateTime
+    getUserById(id: ID!):User!
+    #Rides
+    getRides:[getRide]!
+    getRideById(id:ID!):getRide
+    
 }
 
 type Mutation {
@@ -51,9 +55,32 @@ type Ride{
     _id: ID
     where_start:String!
     where_end:String!
-    when_start:String!
-    when_end:String!
+    when_start:DateTime!
+    when_end:DateTime
+    how_many:Int!
     rate:String!
-    liked:Boolean!
-    comment:String!
+    note:String
+    is_active:Boolean
+}
+
+input createRideInput {
+    where_start:String!
+    where_end:String!
+    when_start:DateTime!
+    when_end:DateTime
+    how_many:Int!
+    rate:String!
+    note:String
+}
+
+type getRide{
+    _id: ID
+    where_start:String
+    where_end:String
+    when_start:DateTime
+    when_end:DateTime
+    how_many:Int
+    rate:String
+    note:String
+    is_active:Boolean
 }
