@@ -30,9 +30,16 @@ const RideSchema = new Schema({
     is_active: {
         type:Boolean,
         default:true
-    }
-
-}, { timestamps:true }); /* build and update control dates fields create at and update at */ 
+    },
+    created_by: {
+        type: Schema.Types.ObjectId,
+        ref: 'Users'
+    },
+    taken_by: {
+        type: [Schema.Types.ObjectId],
+        ref: 'Users'
+    },
+}, { timestamps:true }); /* build and update control dates fields createat and updateat */ 
 
 /**
  * On mongo we should use plural nouns

@@ -17,10 +17,6 @@ const UserSchema = new Schema({
         unique: true,
     },
     birth_date: Date,
-    ride: {
-        type: [Schema.Types.ObjectId],
-        ref: 'rides'
-    },
     gender: { 
         type: String,
         enum: ['M','F','O']
@@ -29,6 +25,14 @@ const UserSchema = new Schema({
     is_active: {
         type:Boolean,
         default:true,
+    },
+    ride_created: {
+        type: [Schema.Types.ObjectId],
+        ref: 'Rides'
+    },
+    ride_taken: {
+        type: [Schema.Types.ObjectId],
+        ref: 'Rides'
     }
 }, { timestamps: true });
 

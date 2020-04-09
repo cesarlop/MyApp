@@ -1,8 +1,12 @@
 const Users = require('../models/Users');
 
-const getAllUsers = () => Users.find({is_active: true});
+const getAllUsers = () => Users
+    .find({is_active: true})
+    .populate([ { path:'ride_created',model:'Rides' }, { path:'ride_taken',model:'Rides' } ]);
 
-const getOneUserById  = (id) => Users.findById({_id:id});
+const getOneUserById  = (id) => Users
+    .findById({_id:id})
+    .populate([ { path:'ride_created',model:'Rides' }, { path:'ride_taken',model:'Rides' } ]);
 
 const createOneUser = (data) => Users.create(data);
 

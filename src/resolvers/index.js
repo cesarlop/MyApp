@@ -1,6 +1,8 @@
 const UserResolver = require('./UserResolvers');
 const RiderResolver = require('./RiderResolvers');
 
+const { EmailAddressResolver, URLResolver } = require('graphql-scalars');
+
 const { GraphQLScalarType  } = require('graphql');
 
 const DateTime = new GraphQLScalarType({
@@ -12,15 +14,16 @@ const DateTime = new GraphQLScalarType({
 });
 
 module.exports = {
-    
+    EmailAdd: EmailAddressResolver,
+    URL:URLResolver,
+    DateTime,
     Query:{
         ...UserResolver.Query,
         ...RiderResolver.Query,
     },
 
     Mutation:{
-        ...UserResolver.Mutation,    
-    },
-
-    DateTime,
+        ...UserResolver.Mutation, 
+        ...RiderResolver.Mutation,   
+    },    
 };

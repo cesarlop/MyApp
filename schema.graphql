@@ -1,5 +1,7 @@
 # Define all objects to use on the app
 scalar DateTime
+scalar EmailAdd
+scalar URL
 type Query {
     getUsers:[User]!
     getUserById(id: ID!):User!
@@ -13,6 +15,10 @@ type Mutation {
     createUser(data:createUserInput!): User!
     updateUser(id: ID!, data:updateUserInput!): User!
     deleteUser(id:ID!):User!
+    #Rides
+    createRide(idUser:ID!, data:createRideInput): Ride!
+    updateRide(id:ID!, data:updateRideInput): Ride!
+
 }
 
 enum GENDERS {
@@ -25,18 +31,19 @@ type User {
     _id: ID!
     first_name: String!
     last_name: String!
-    email: String!
+    email: EmailAdd!
     birth_date: DateTime!
-    ride: [Ride]!
     gender: GENDERS
     profile_pic: String!
     is_active: Boolean!
+    ride_created: [Ride]!
+    ride_taken: [Ride]!
 }
 
 input createUserInput {
     first_name: String!
     last_name: String!
-    email: String!
+    email: EmailAdd!
     profile_pic: String
     birth_date: DateTime  
 }
@@ -44,7 +51,7 @@ input createUserInput {
 input updateUserInput {
     first_name: String!
     last_name: String!
-    email: String!
+    email: EmailAdd!
     birth_date: DateTime
     gender: GENDERS
     profile_pic: String
@@ -61,17 +68,31 @@ type Ride{
     rate:String!
     note:String
     is_active:Boolean
+    created_by:User!
+    taken_by:[User]! # Contains all the user to take the ride 
 }
 
 input createRideInput {
-    where_start:String!
-    where_end:String!
-    when_start:DateTime!
-    when_end:DateTime
-    how_many:Int!
-    rate:String!
-    note:String
+    where_start: String!
+    where_end: String!
+    when_start: DateTime!
+    when_end: DateTime
+    how_many: Int!
+    rate: String!
+    note: String
+    created_by: ID!
 }
+
+input updateRideInput {
+    where_start: String!
+    where_end: String!
+    when_start: DateTime!
+    when_end: DateTime
+    how_many: Int!
+    rate: String!
+    note: String
+}
+
 
 type getRide{
     _id: ID
