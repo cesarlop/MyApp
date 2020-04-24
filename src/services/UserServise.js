@@ -8,6 +8,9 @@ const getOneUserById  = (id) => Users
     .findById({_id:id})
     .populate([ { path:'ride_created',model:'Rides' }, { path:'ride_taken',model:'Rides' } ]);
 
+
+const getOneUserByEmail = (email) => Users.findOne({email:email ,is_active:true});
+
 const createOneUser = (data) => Users.create(data);
 
 const updateOneUser = (id,data) => Users.findByIdAndUpdate({ _id:id, is_active:true }, 
@@ -22,4 +25,5 @@ module.exports = {
     createOneUser,
     updateOneUser,
     deleteOneUser,
+    getOneUserByEmail,
 };

@@ -1,4 +1,4 @@
-const { createOneRide, updateOneRide } = require('../../services/RideServise');
+const { createOneRide, updateOneRide, deleteOneRide } = require('../../services/RideServise');
 const { getOneUserById } = require('../../services/UserServise');
 
 
@@ -17,8 +17,13 @@ const updateRide = async(_, { id, data }) => {
     return ride;
 };
 
+const deleteRide = async(_, { id }) => {
+    const ride = await deleteOneRide(id);
+    return 'DELETED';
+};
 
 module.exports = {
     createRide,
     updateRide,
+    deleteRide,
 };

@@ -1,4 +1,4 @@
-const { getAllUsers, getOneUserById } = require('../../services/UserServise');
+const { getAllUsers, getOneUserById, getOneUserByEmail } = require('../../services/UserServise');
 
 const getUsers = async () => {
     const users = await getAllUsers();
@@ -10,7 +10,13 @@ const getUserById = async (_,{ id }) => {
     return user;
 };
 
+const getUserByEmail = async (_,{ email }) => {
+    const user = await getOneUserByEmail(email);
+    return user;
+};
+
 module.exports = {
     getUsers,
     getUserById,
+    getUserByEmail,
 };

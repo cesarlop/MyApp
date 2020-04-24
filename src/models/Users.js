@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const bcript = require('bcrypt');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
@@ -33,8 +33,26 @@ const UserSchema = new Schema({
     ride_taken: {
         type: [Schema.Types.ObjectId],
         ref: 'Rides'
+    },
+    password:{
+        type:String,
+        require:true
     }
 }, { timestamps: true });
+
+UserSchema.pre('save', function(next){
+    const user = this;
+    const SALT_FACTOR = 10;
+    if (!user.isModified('password')) { return next(); }
+    bcript.genSalt(SALT_FACTOR, function(err, salt) {
+        if (err) return next(err);
+        bcript.hash(user.password, salt ,SALT_FACTOR, function(err, hash) {
+            if (err) return next(err);
+            user.password = hash;
+            next();
+        });
+    });
+});
 
 /**
  * On mongo we should use plural nouns

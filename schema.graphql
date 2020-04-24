@@ -2,23 +2,30 @@
 scalar DateTime
 scalar EmailAdd
 scalar URL
+directive @auth on FIELD_DEFINITION | FIEL
 type Query {
-    getUsers:[User]!
-    getUserById(id: ID!):User!
+    getUsers:[User]! @auth 
+    getUserById(id: ID!):User! @auth
     #Rides
-    getRides:[getRide]!
-    getRideById(id:ID!):getRide
-    
+    getRides:[getRide]! @auth
+    getRideById(id:ID!):getRide! @auth    
 }
 
 type Mutation {
-    createUser(data:createUserInput!): User!
-    updateUser(id: ID!, data:updateUserInput!): User!
-    deleteUser(id:ID!):User!
+    createUser(data:createUserInput!):User!
+    updateUser(id: ID!, data:updateUserInput!):User! @auth
+    deleteUser(id:ID!):User! @auth
+    login(email:EmailAdd, password:String!):Auth! 
     #Rides
-    createRide(idUser:ID!, data:createRideInput): Ride!
-    updateRide(id:ID!, data:updateRideInput): Ride!
+    createRide(idUser:ID!, data:createRideInput):Ride! @auth
+    updateRide(id:ID!, data:updateRideInput):Ride! @auth
+    deleteRide(id:ID!):String! @auth
 
+}
+
+type Auth {
+    token:String1
+    message:String!
 }
 
 enum GENDERS {
